@@ -1,0 +1,72 @@
+<html>
+<head>
+<title>EmpController.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cc7832;}
+.s1 { color: #a9b7c6;}
+.s2 { color: #6a8759;}
+.s3 { color: #6897bb;}
+.s4 { color: #808080;}
+</style>
+</head>
+<body bgcolor="#2b2b2b">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+EmpController.java</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">io.siva.employee.controller</span><span class="s0">;</span>
+
+
+
+<span class="s0">import </span><span class="s1">io.siva.employee.entity.EntityCalc</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">io.siva.employee.repo.EmpRepo</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">org.springframework.beans.factory.annotation.Autowired</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">org.springframework.stereotype.Controller</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">org.springframework.web.bind.annotation.RequestMapping</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">org.springframework.web.bind.annotation.RequestParam</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">org.springframework.web.bind.annotation.ResponseBody</span><span class="s0">;</span>
+
+
+
+<span class="s1">@Controller</span>
+<span class="s1">@RequestMapping</span>
+<span class="s0">public class </span><span class="s1">EmpController {</span>
+
+    <span class="s1">@Autowired</span>
+    <span class="s1">EmpRepo empRepo</span><span class="s0">;</span>
+
+    <span class="s1">@ResponseBody</span>
+    <span class="s1">@RequestMapping(</span><span class="s2">&quot;/calc&quot;</span><span class="s1">)</span>
+    <span class="s0">public int </span><span class="s1">Calc(EntityCalc entityCalc) {</span>
+        <span class="s0">double </span><span class="s1">net_sal=</span><span class="s3">0</span><span class="s0">;</span>
+        <span class="s0">if </span><span class="s1">(entityCalc.getSalary() &gt;= </span><span class="s3">250000</span><span class="s1">) {</span>
+            <span class="s1">net_sal = entityCalc.getSalary()-(entityCalc.getSalary() * </span><span class="s3">20 </span><span class="s1">/ </span><span class="s3">100</span><span class="s1">)</span><span class="s0">;</span>
+
+        <span class="s1">}</span>
+        <span class="s0">else if </span><span class="s1">(entityCalc.getSalary() &gt;= </span><span class="s3">600000</span><span class="s1">)</span>
+        <span class="s1">{</span>
+            <span class="s1">net_sal= entityCalc.getSalary()-(entityCalc.getSalary() * </span><span class="s3">30 </span><span class="s1">/ </span><span class="s3">100</span><span class="s1">)</span><span class="s0">;</span>
+
+
+        <span class="s1">}</span>
+        <span class="s1">EntityCalc calc =</span><span class="s0">new </span><span class="s1">EntityCalc(entityCalc.getEmp()</span><span class="s0">,</span><span class="s1">entityCalc.getSalary()</span><span class="s0">,</span><span class="s1">net_sal)</span><span class="s0">;</span>
+        <span class="s1">empRepo.save(calc)</span><span class="s0">;</span>
+
+
+        <span class="s0">return </span><span class="s1">(</span><span class="s0">int</span><span class="s1">) net_sal</span><span class="s0">;</span>
+
+<span class="s4">//        @RequestParam double salary,@RequestParam String emp</span>
+
+    <span class="s1">}</span>
+    <span class="s1">@RequestMapping(</span><span class="s2">&quot;/home&quot;</span><span class="s1">)</span>
+    <span class="s0">public </span><span class="s1">String home()</span>
+    <span class="s1">{</span>
+
+        <span class="s0">return </span><span class="s2">&quot;index&quot;</span><span class="s0">;</span>
+    <span class="s1">}</span>
+<span class="s1">}</span>
+</pre>
+</body>
+</html>
